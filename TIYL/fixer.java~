@@ -1,0 +1,11 @@
+public class fixer extends  {
+  
+  public fixer() {
+    entriesArray = new ArrayList<JournalEntry>();
+    FileOutputStream file = new FileOutputStream("entries.txt");
+    ObjectOutputStream out = new ObjectOutputStream(file); 
+    out.writeObject(entriesArray);
+    in.close(); 
+    fileIn.close();
+  }
+}

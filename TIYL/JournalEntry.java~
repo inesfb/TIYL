@@ -1,0 +1,24 @@
+import java.util.Scanner;
+import java.io.*;
+
+public class JournalEntry implements Serializable {
+  
+  private int day;
+  private int month;
+  private int year;
+  private String text;
+
+  
+  public JournalEntry(int day, int month, int year, String text) {
+    this.day = day;
+    this.month = month;
+    this.year = year;
+    this.text = text;
+  }
+}
+      
+              
+     
+  
+  
+  

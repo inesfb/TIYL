@@ -1,0 +1,22 @@
+import javax.swing.*;     // JPanel
+import java.awt.*;        // Graphics2D, Color
+import java.awt.geom.*;
+
+public graphicWeeks(int weekCount) {
+    JPanel = new JPanel;
+    int height = 30;
+    int x = 10;
+    int weeksDrawn = 0;
+    for (i = 0; i < 90; i++) {
+      for (i = 0; i < 52; i++) {
+      Rectangle rect = newRectangle(height, x, 5, 5);
+      pen.draw(rect)
+      if (weeksDrawn < weekCount) {
+        rect.setColor(BLUE);
+      }
+      x = x + 5;
+      weeksDrawn++;
+      }
+      height = height + 9;
+    }
+}

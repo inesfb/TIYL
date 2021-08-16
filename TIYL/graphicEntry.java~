@@ -1,0 +1,102 @@
+import javax.swing.*;  
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+
+public class graphicEntry extends JFrame {
+  
+  private JButton doneButton;
+  private JComboBox dayMenu;
+  private JComboBox monthMenu;
+  private JComboBox yearMenu;
+  private JTextArea textArea;
+  private File filename;
+  
+  private class ButtonListener implements ActionListener { //dont know where to throw exception
+        public void actionPerformed(ActionEvent event) {
+            if (event.getSource() == doneButton) {
+                System.out.println("Done clicked");
+                
+                //read date
+                String dayString = (String) dayMenu.getSelectedItem();
+                int day = Integer.parseInt(dayString);
+                String monthString = (String) monthMenu.getSelectedItem();
+                int month = Integer.parseInt(monthString);
+                String yearString = (String) monthMenu.getSelectedItem();
+                int year = Integer.parseInt(yearString);
+                
+                //read text
+                String text = textArea.getText();
+                
+                //create new JournalEntry object
+                JournalEntry entry = new JournalEntry(day, month, year, text);
+                
+                //serialize JournalEntry object into file
+                    
+                try {
+                    FileOutputStream file = new FileOutputStream(filename);
+                    ObjectOutputStream out = new ObjectOutputStream(file); 
+                    
+                    out.writeObject(entry);
+                    
+                    out.close(); 
+                    file.close();
+                } catch (IOException e) {
+                    System.out.println(e);
+                }
+
+            } else {
+                System.out.println("This should never happen");
+            }
+        }
+    }
+  
+  public graphicEntry() {
+    
+    JPanel panel = new JPanel();
+    panel.setLayout(new BorderLayout());
+    ButtonListener listener = new ButtonListener();
+    
+    
+    //Set entry date
+    String[] months = { "January", "February", "March", "April", "May", "June", "July", "August",
+    "September", "October", "December" };
+    JComboBox<String> monthMenu = new JComboBox<String>(months);
+    
+    
+    String[] days = new String[32];
+    for (int i = 1; i <= 31; i++) {
+      days[i] = Integer.toString(i);
+    }
+    this.dayMenu = new JComboBox<String>(days);
+    
+    String[] years = new String[300];
+    for (int i = 1900; i < 2200; i++) {
+      years[i-1900] = Integer.toString(i);
+    }
+    JComboBox<String> yearMenu = new JComboBox<String>(years);
+    
+    JPanel datePanel = new JPanel();
+    datePanel.add(monthMenu);
+    datePanel.add(dayMenu);
+    datePanel.add(yearMenu);
+    
+    //Write entry
+    JTextArea textArea = new JTextArea(30, 15);
+    JScrollPane pane = new JScrollPane(textArea);
+    this.doneButton = new JButton("Done");
+    doneButton.addActionListener(listener);
+    
+    //Construct panel
+    panel.add(textArea, BorderLayout.CENTER);
+    panel.add(doneButton, BorderLayout.SOUTH);
+    panel.add(datePanel, BorderLayout.NORTH);
+    
+   this.add(panel);
+   this.setTitle("Make an Entry");
+   this.setBackground(Color.BLUE);
+   this.setSize(350, 500);
+   this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+   this.setVisible(true);
+  }
+}

@@ -1,0 +1,97 @@
+import javax.swing.*;  
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Scanner;
+import java.io.File;
+
+import java.io.FileNotFoundException;
+
+public class TIYLgui extends JFrame {
+  
+  private JButton LogButton;
+  private JButton viewQualitativeButton;
+  private JButton viewStatsButton;
+  private JButton settingsButton;
+  
+  private class ButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            if (event.getSource() == LogButton) {
+                
+              graphicEntry entry = new graphicEntry();
+              
+            } else if (event.getSource() == viewQualitativeButton) {
+              System.out.println("viewQualitativeButton clicked");
+              
+              //get todays date
+              //fetch & view previous entries of today
+              
+            } else if (event.getSource() == viewStatsButton) {
+              System.out.println("viewStatsButton clicked");
+              
+              try {
+                  File file = new File("birthday.txt"); 
+                  Scanner sc = new Scanner(file);
+                  if (sc.hasNextLine()) {
+                      int day = Integer.parseInt(sc.next());
+                      int month = Integer.parseInt(sc.next());
+                      int year = Integer.parseInt(sc.next());
+                      graphicLife life = new graphicLife(day, month, year);
+                  } else {
+                      JOptionPane.showMessageDialog(null, "Birthday has not been set");
+                  }
+              } catch (FileNotFoundException e) {
+                  System.out.println(e);
+              }
+
+            } else if (event.getSource() == settingsButton) {
+                System.out.println("Settings clicked");
+                
+                //allow user to edit birthday
+            } else {
+                System.out.println("This should never happen");
+            }
+        }
+    }
+    
+    public TIYLgui() {
+      
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(4, 1));
+        ButtonListener listener = new ButtonListener();
+        
+        this.LogButton = new JButton("Log an Entry");
+        this.LogButton.addActionListener(listener);
+        this.viewQualitativeButton = new JButton("View past");
+        this.viewQualitativeButton.addActionListener(listener);
+        this.viewStatsButton = new JButton("View Stats");
+        viewStatsButton.addActionListener(listener);
+        this.settingsButton = new JButton("Settings");
+        this.settingsButton.addActionListener(listener); //should it be action or button? (for all)
+        //bug: listener always prints out what should never happen
+    
+        Font font = new Font("Helvetica", + Font.BOLD, 20);
+        this.LogButton.setFont(font);
+        this.viewQualitativeButton.setFont(font);
+        this.viewStatsButton.setFont(font);
+        this.settingsButton.setFont(font);
+        
+        panel.add(this.LogButton);
+        panel.add(this.viewQualitativeButton);
+        panel.add(this.viewStatsButton);
+        panel.add(this.settingsButton);
+
+        this.add(panel);
+        this.setTitle("This Is Your Life");
+        this.setBackground(Color.BLUE);
+        this.setSize(350, 500);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
+    }
+
+  public static void main(String[] args) {
+    TIYLgui gui = new TIYLgui();
+  }
+}
+    
+    
+    
